@@ -13,5 +13,6 @@ from django.shortcuts import render
 
 def admin_page_view(request):
     is_admin = True
+    status = 200 if is_admin else 403
     return render(request, 'level_1/admin_page.html',
-                  context={'is_admin': is_admin}, status=200 if is_admin else 403)
+                  context={'is_admin': is_admin}, status=status)
