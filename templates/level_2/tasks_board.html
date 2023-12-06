@@ -15,20 +15,15 @@
   <body>
     <main class="container">
       <div class="grid">
+        {% regroup tasks|dictsortreversed:"status" by status as task_list %}
+        {% for status in task_list %}
         <div>
-          <h4>К выполнению</h4>
-          <article class="card">Задача 1</article>
-          <article class="card">Задача 2</article>
-          <article class="card">Задача 3</article>
+          <h4>{% if status.grouper == 'todo' %}К выполнению{% elif status.grouper == 'in_progress' %}В процессе{% else %}Выполнено{% endif %} </h4>
+          {% for task in status.list %}
+            <article class="card">{{ task.title }}</article>
+          {% endfor %}
         </div>
-        <div>
-          <h4>В процессе</h4>
-          <article class="card">Задача 4</article>
-        </div>
-        <div>
-          <h4>Выполнено</h4>
-          <article class="card">Задача 5</article>
-        </div>
+        {% endfor %}
       </div>
     </main>
   </body>

@@ -13,24 +13,20 @@
           <thead>
             <tr>
               <th scope="col">Name</th>
-              <th scope="col">Week 1 completed</th>
-              <th scope="col">Week 2 completed</th>
-              <th scope="col">Week 3 completed</th>
+              {% for i in '123'|make_list %}
+                <th scope="col">Week {{i}} completed</th>
+              {% endfor %}
             </tr>
           </thead>
           <tbody>
+          {% for performance in performances %}
             <tr>
-              <th scope="row">Jack</th>
-              <td>✅</td>
-              <td>✅</td>
-              <td>❌</td>
+              <th scope="row">{{ performance.student_name }}</th>
+              {% for i in '123'|make_list %}
+                <td>{% if performance|get_week_by_index:i %}✅{% else %}❌{% endif %}</td>
+              {% endfor %}
             </tr>
-            <tr>
-              <th scope="row">Jill</th>
-              <td>❌</td>
-              <td>❌</td>
-              <td>✅</td>
-            </tr>
+          {% endfor %}
           </tbody>
         </table>
       </article>

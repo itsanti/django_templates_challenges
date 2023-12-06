@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <style>
       .dangerous {
-        background-color: lightpink;
+        background-color: #d81b60;
       }
     </style>
     <title>Transactions</title>
@@ -14,7 +14,7 @@
   <body>
     <main class="container">
       <article>
-        <h2>5 transactions to review</h2>
+        <h2>{{ transactions|length }} transactions to review</h2>
         <table>
           <thead>
             <tr>
@@ -26,41 +26,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th style="font-size: x-small">12f8e914-1fa0-490b-a5fd-1ab0c9bde5b8</th>
-              <td>2023-06-12 15:24</td>
-              <td>14 GBP</td>
-              <td style="font-size: x-small">898882f5-4557-4eb2-b5b1-9874d0b07c50</td>
-              <td>✅</td>
-            </tr>
-            <tr>
-              <th style="font-size: x-small">12f8e914-1fa0-490b-a5fd-1ab0c9bde5b8</th>
-              <td>2023-06-12 15:24</td>
-              <td>8 USD</td>
-              <td style="font-size: x-small">898882f5-4557-4eb2-b5b1-9874d0b07c50</td>
-              <td>✅</td>
-            </tr>
-            <tr class="dangerous">
-              <th style="font-size: x-small">12f8e914-1fa0-490b-a5fd-1ab0c9bde5b8</th>
-              <td>2023-06-12 15:24</td>
-              <td>14 GBP</td>
-              <td style="font-size: x-small">898882f5-4557-4eb2-b5b1-9874d0b07c50</td>
-              <td>❌</td>
-            </tr>
-            <tr class="dangerous">
-              <th style="font-size: x-small">12f8e914-1fa0-490b-a5fd-1ab0c9bde5b8</th>
-              <td>2023-06-12 15:24</td>
-              <td>14 GBP</td>
-              <td style="font-size: x-small">898882f5-4557-4eb2-b5b1-9874d0b07c50</td>
-              <td>❌</td>
-            </tr>
-            <tr>
-              <th style="font-size: x-small">12f8e914-1fa0-490b-a5fd-1ab0c9bde5b8</th>
-              <td>2023-06-12 15:24</td>
-              <td>14 GBP</td>
-              <td style="font-size: x-small">898882f5-4557-4eb2-b5b1-9874d0b07c50</td>
-              <td>✅</td>
-            </tr>
+            {% for transaction in transactions %}
+              {% if transaction.can_be_fraud %}
+                <tr class="dangerous">
+              {% else %}
+                <tr>
+              {% endif %}
+                  <th style="font-size: x-small">{{ transaction.id }}</th>
+                  <td>{{ transaction.submitted_at|date:'Y-m-d H:i' }}</td>
+                  <td>{{ transaction.amount }} {{ transaction.currency.value }}</td>
+                  <td style="font-size: x-small">{{ transaction.receiver_id }}</td>
+                  <td>{% if transaction.can_be_fraud %}❌{% else %}✅{% endif %} </td>
+                </tr>
+            {% endfor %}
           </tbody>
         </table>
       </article>
