@@ -5,7 +5,11 @@
 """
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.template.defaulttags import register
 
+@register.filter
+def get_week_by_index(dictionary, index):
+    return dictionary.get(f"week{index}_completed")
 
 def students_performance_view(request: HttpRequest) -> HttpResponse:
     performances = [

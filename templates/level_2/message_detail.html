@@ -11,15 +11,14 @@
       <article>
         <nav>
           <ul>
-            <li><strong>Bruce Schneier</strong></li>
+            <li><strong>{{ message.author_nickname }}</strong></li>
           </ul>
           <ul>
-            <li>Likes: 5</li>
-            <li>Reposts: 0</li>
+            <li>Likes: {{ message.likes_num }}</li>
+            <li>Reposts: {{ message.reposts_num }}</li>
           </ul>
         </nav>
-        “Anyone, from the most clueless amateur to the best cryptographer,
-        can create an algorithm that he himself cannot break.” — Bruce Schneier
+        “{{ message.text }}” — {{ message.author_nickname }}
       </article>
     </main>
   </body>
